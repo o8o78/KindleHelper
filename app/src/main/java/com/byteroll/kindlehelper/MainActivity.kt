@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
             R.id.addManually -> {
                 TypeInDialog(this).show()
             }
+            R.id.fromClipBoard ->{
+                TypeInDialog(this, Utils.getFromClipBoard()).show()
+            }
         }
         return true
     }

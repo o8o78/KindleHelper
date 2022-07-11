@@ -1,7 +1,10 @@
 package com.byteroll.kindlehelper.utils
 
 import android.app.Activity
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,6 +19,21 @@ class Utils {
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             }
+        }
+        fun getFromClipBoard(): String{
+            try {
+                val cm = App.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = cm.primaryClip
+                if (clip!=null && clip.itemCount>0){
+                    val text = clip.getItemAt(0).coerceToText(App.context) as CharSequence
+                    if (!TextUtils.isEmpty(text)){
+                        return text.toString()
+                    }
+                }
+            } catch (e: Exception){
+                e.toString().log()
+            }
+            return ""
         }
     }
 }

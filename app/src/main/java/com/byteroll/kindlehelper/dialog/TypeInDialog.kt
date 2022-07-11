@@ -18,6 +18,12 @@ class TypeInDialog(context: Context): Dialog(context, R.style.TransDialog), View
 
     private lateinit var binding: DlgTypeInBinding
 
+    private var clipData : String? = null
+
+    constructor(context: Context, msg: String): this(context){
+        clipData = msg
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DlgTypeInBinding.inflate(layoutInflater)
@@ -40,6 +46,9 @@ class TypeInDialog(context: Context): Dialog(context, R.style.TransDialog), View
          with(binding){
              confirm.setOnClickListener(this@TypeInDialog)
              confirm.isClickable = false
+             if (clipData!=null){
+                 edit.setText(clipData)
+             }
              edit.addTextChangedListener{
                  confirm.isClickable = !TextUtils.isEmpty(edit.text)
              }
