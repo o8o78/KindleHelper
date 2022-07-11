@@ -4,6 +4,8 @@ import android.app.Activity
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.byteroll.kindlehelper.App
 
 class Utils {
     companion object{
@@ -35,4 +37,8 @@ fun String.log(){
             break
         }
     }
+}
+
+fun String.toast(){
+    Toast.makeText(App.context, this, Toast.LENGTH_SHORT).show()
 }
