@@ -3,10 +3,13 @@ package com.byteroll.kindlehelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.byteroll.kindlehelper.App.Companion.context
 import com.byteroll.kindlehelper.adapter.HomeListAdapter
 import com.byteroll.kindlehelper.databinding.ActivityMainBinding
+import com.byteroll.kindlehelper.dialog.TypeInDialog
 import com.byteroll.kindlehelper.entity.Article
 import com.byteroll.kindlehelper.utils.Utils
 import com.byteroll.kindlehelper.viewmodels.MainViewModel
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val articles = mutableListOf(
+    private val articles = mutableListOf(
         Article(
             "Game of throne",
             "There were fierce battles in gaza on Friday as Hamas and Israel both rejected the United Nations' call for cease-fire."
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         )
     )
 
-    val articleList = ArrayList<Article>()
+    private val articleList = ArrayList<Article>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.addManually -> {
+                TypeInDialog(this).show()
+            }
+        }
         return true
     }
 
@@ -53,9 +65,9 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun initArticles(){
+    private fun initArticles() {
         articleList.clear()
-        repeat(50){
+        repeat(50) {
             val index = (0 until 1).random()
             articleList.add(articles[index])
         }
