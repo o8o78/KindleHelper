@@ -39,7 +39,19 @@
         tools:text="catch succeed"
         android:background="#80888888"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingStart="16dp"
+        android:paddingHorizontal="16dp"
+        />
+
+    <!--fab-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_grab"
+        android:contentDescription="search button"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
