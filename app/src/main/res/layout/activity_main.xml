@@ -7,6 +7,7 @@
     tools:context=".MainActivity"
     android:fitsSystemWindows="false">
 
+    <!--toolbar-->
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +17,29 @@
         app:popupTheme="@style/OverflowMenu"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="35dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/info_card"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        />
+
+    <!--bottom info card-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/info_card"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        tools:text="catch succeed"
+        android:background="#80888888"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="16dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
