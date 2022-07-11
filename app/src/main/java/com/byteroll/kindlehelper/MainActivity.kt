@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         Utils.setUiFlags(this)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setSupportActionBar(binding.toolbar)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.initArticles()
         val layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.layoutManager = layoutManager
