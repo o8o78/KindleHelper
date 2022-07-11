@@ -14,13 +14,18 @@ import com.byteroll.kindlehelper.databinding.DlgTypeInBinding
 import com.byteroll.kindlehelper.utils.HttpUtil
 import com.byteroll.kindlehelper.utils.toast
 
-class TypeInDialog(context: Context): Dialog(context, R.style.TransDialog), View.OnClickListener {
+class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.TransDialog), View.OnClickListener {
 
     private lateinit var binding: DlgTypeInBinding
 
+    interface Result{
+        fun onResult(result: String)
+        fun onError(error: String)
+    }
+
     private var clipData : String? = null
 
-    constructor(context: Context, msg: String): this(context){
+    constructor(context: Context, msg: String, cbk: Result): this(context, cbk){
         clipData = msg
     }
 
@@ -70,10 +75,11 @@ class TypeInDialog(context: Context): Dialog(context, R.style.TransDialog), View
         if (checkFormat(url)){
             HttpUtil.sendHttpRequest(url, object : HttpUtil.HttpCallbackListener{
                 override fun onFailed(e: String) {
-                    //do nothing
+                    cbk.onError(e)
                 }
                 override fun onFinish(response: String) {
                     val result = processResponse(response)
+                    cbk.onResult(result)
                 }
             })
         } else {

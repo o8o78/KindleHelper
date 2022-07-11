@@ -35,10 +35,24 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.addManually -> {
-                TypeInDialog(this).show()
+                TypeInDialog(this, object : TypeInDialog.Result{
+                    override fun onResult(result: String) {
+                        TODO("Not yet implemented")
+                    }
+                    override fun onError(error: String) {
+                        TODO("Not yet implemented")
+                    }
+                }).show()
             }
             R.id.fromClipBoard ->{
-                TypeInDialog(this, Utils.getFromClipBoard()).show()
+                TypeInDialog(this, Utils.getFromClipBoard(), object : TypeInDialog.Result{
+                    override fun onResult(result: String) {
+                        TODO("Not yet implemented")
+                    }
+                    override fun onError(error: String) {
+                        TODO("Not yet implemented")
+                    }
+                }).show()
             }
         }
         return true
