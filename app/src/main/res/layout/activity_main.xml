@@ -7,6 +7,15 @@
     tools:context=".MainActivity"
     android:fitsSystemWindows="false">
 
-
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/color_primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/OverflowMenu"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="35dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

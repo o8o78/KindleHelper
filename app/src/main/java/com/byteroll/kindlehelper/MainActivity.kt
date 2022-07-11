@@ -2,6 +2,7 @@ package com.byteroll.kindlehelper
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.lifecycle.ViewModelProvider
 import com.byteroll.kindlehelper.databinding.ActivityMainBinding
 import com.byteroll.kindlehelper.utils.Utils
@@ -20,9 +21,15 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+
     private fun init(){
         Utils.setUiFlags(this)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        setSupportActionBar(binding.toolbar)
     }
 
 
