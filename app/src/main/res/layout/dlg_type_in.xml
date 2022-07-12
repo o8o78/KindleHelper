@@ -36,19 +36,45 @@
             android:hint="enter the url here"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/confirm"
-            />
-        
-        <!--confirm-->
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:id="@+id/confirm"
-            android:src="@drawable/ic_done"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/edit"
-            app:layout_constraintBottom_toBottomOf="@id/edit"
             />
+
+        <!--Confirm-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirm"
+            android:gravity="center"
+            android:text="Confirm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toStartOf="@id/cancel"
+            />
+
+        <!--Cancel-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel"
+            android:gravity="center"
+            android:text="Cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/confirm"
+            />
+
+<!--        &lt;!&ndash;confirm&ndash;&gt;-->
+<!--        <ImageView-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:id="@+id/confirm"-->
+<!--            android:src="@drawable/ic_done"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@id/edit"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/edit"-->
+<!--            />-->
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 

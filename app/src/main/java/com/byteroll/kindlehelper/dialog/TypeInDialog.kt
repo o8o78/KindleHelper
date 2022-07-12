@@ -53,6 +53,7 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
          with(binding){
              confirm.setOnClickListener(this@TypeInDialog)
              confirm.isClickable = false
+             cancel.setOnClickListener(this@TypeInDialog)
              edit.addTextChangedListener{
                  confirm.isClickable = !TextUtils.isEmpty(edit.text)
              }
@@ -68,6 +69,9 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
             when(v){
                 confirm->{
                     processUrl(edit.editableText.toString())
+                }
+                cancel->{
+                    dismiss()
                 }
             }
         }
