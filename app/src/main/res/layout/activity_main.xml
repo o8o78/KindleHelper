@@ -24,20 +24,7 @@
         android:layout_height="0dp"
         android:id="@+id/recycler_view"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/info_card"
-        />
-
-    <!--bottom info card-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/info_card"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
-        tools:text="catch succeed"
-        android:background="#80888888"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:paddingHorizontal="16dp"
         />
 
     <!--fab-->
@@ -50,6 +37,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_grab"
         android:contentDescription="search button"
+        android:visibility="gone"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
