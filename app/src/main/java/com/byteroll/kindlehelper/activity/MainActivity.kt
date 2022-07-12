@@ -1,4 +1,4 @@
-package com.byteroll.kindlehelper
+package com.byteroll.kindlehelper.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.adapter.HomeListAdapter
 import com.byteroll.kindlehelper.dao.ArticleDao
 import com.byteroll.kindlehelper.database.ArticleDatabase

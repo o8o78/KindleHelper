@@ -3,6 +3,7 @@ package com.byteroll.kindlehelper.dialog
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.byteroll.kindlehelper.R
+import com.byteroll.kindlehelper.activity.SendActivity
 import com.byteroll.kindlehelper.databinding.DlgArticleBinding
 import com.byteroll.kindlehelper.utils.Utils
 
@@ -72,6 +74,7 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
         binding.apply {
             containerShow.text = article
             back.setOnClickListener(this@ArticleDialog)
+            send.setOnClickListener(this@ArticleDialog)
         }
     }
 
@@ -80,6 +83,12 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
             when (v) {
                 back -> {
                     dismiss()
+                }
+                send -> {
+                    val intent = Intent(context, SendActivity::class.java).apply {
+                        putExtra("article", article)
+                    }
+                    context.startActivity(intent)
                 }
             }
         }

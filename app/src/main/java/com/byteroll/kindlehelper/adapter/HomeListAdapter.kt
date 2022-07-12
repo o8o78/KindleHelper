@@ -4,9 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ThreadUtils
-import com.byteroll.kindlehelper.App
-import com.byteroll.kindlehelper.MainActivity
 import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.databinding.HomeListItemBinding
 import com.byteroll.kindlehelper.dialog.ArticleDialog
