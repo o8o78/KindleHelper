@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         articleDao = ArticleDatabase.getDatabase(this).articleDao()
-//        viewModel.initArticles()
         adapter = HomeListAdapter(this, viewModel.articleList)
         val layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.layoutManager = layoutManager
