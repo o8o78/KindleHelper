@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                         reloadArticles(result)
                     }
                     override fun onError(error: String) {
-                        "grab failed".log()
+                        "grab failed with error: $error".log()
                     }
                 }).show()
             }
