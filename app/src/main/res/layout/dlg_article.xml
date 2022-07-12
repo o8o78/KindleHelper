@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cv_title"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         >
 
         <!--back-->
@@ -34,6 +34,7 @@
             android:id="@+id/title"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:textColor="#000000"
             android:text="Emancipation Proclamation"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/container_show"
+            android:textColor="#000000"
             app:layout_constraintTop_toBottomOf="@id/cv_title"
             app:layout_constraintBottom_toBottomOf="parent"
             />
