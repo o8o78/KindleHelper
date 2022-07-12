@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.databinding.DlgTypeInBinding
 import com.byteroll.kindlehelper.utils.HttpUtil
+import com.byteroll.kindlehelper.utils.log
 import com.byteroll.kindlehelper.utils.toast
 
 class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.TransDialog), View.OnClickListener {
@@ -51,11 +52,11 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
          with(binding){
              confirm.setOnClickListener(this@TypeInDialog)
              confirm.isClickable = false
-             if (clipData!=null){
-                 edit.setText(clipData)
-             }
              edit.addTextChangedListener{
                  confirm.isClickable = !TextUtils.isEmpty(edit.text)
+             }
+             if (clipData!=null){
+                 edit.setText(clipData)
              }
          }
 
@@ -76,10 +77,12 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
             HttpUtil.sendHttpRequest(url, object : HttpUtil.HttpCallbackListener{
                 override fun onFailed(e: String) {
                     cbk.onError(e)
+                    "grab failed".toast()
                 }
                 override fun onFinish(response: String) {
                     val result = processResponse(response)
                     cbk.onResult(result)
+                    dismiss()
                 }
             })
         } else {
