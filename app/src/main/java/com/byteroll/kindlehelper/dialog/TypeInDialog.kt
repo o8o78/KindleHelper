@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.blankj.utilcode.util.ThreadUtils
 import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.databinding.DlgTypeInBinding
 import com.byteroll.kindlehelper.utils.HttpUtil
@@ -74,14 +75,17 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
 
     private fun processUrl(url: String){
         if (checkFormat(url)){
+            showProgress(true)
             HttpUtil.sendHttpRequest(url, object : HttpUtil.HttpCallbackListener{
                 override fun onFailed(e: String) {
                     cbk.onError(e)
                     "grab failed".toast()
+                    showProgress(false)
                 }
                 override fun onFinish(response: String) {
                     val result = processResponse(response)
                     cbk.onResult(result)
+                    showProgress(false)
                     dismiss()
                 }
             })
@@ -107,6 +111,12 @@ class TypeInDialog(context: Context,val cbk: Result): Dialog(context, R.style.Tr
     private fun checkFormat(url: String) : Boolean{
         val regex = Regex("(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
         return regex.matches(url)
+    }
+
+    private fun showProgress(show: Boolean){
+        ThreadUtils.runOnUiThread {
+            binding.progress.visibility = if (show) View.VISIBLE else View.GONE
+        }
     }
 
 }
