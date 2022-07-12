@@ -1,6 +1,7 @@
 package com.byteroll.kindlehelper
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+        processShare()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,6 +90,30 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         thread {
             reloadArticles()
+        }
+    }
+
+    private fun processShare(){
+        if (intent.action==Intent.ACTION_SEND){
+            if ("text/plain" == intent.type){
+                handleSendText(intent)
+            }
+        }
+    }
+
+    private fun handleSendText(intent: Intent){
+        intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+            TypeInDialog(this, it, object : TypeInDialog.Result{
+                override fun onResult(result: String) {
+                    thread {
+                        articleDao.insertArticle(Article("", result))
+                        reloadArticles()
+                    }
+                }
+                override fun onError(error: String) {
+                    "grab failed with error: $error".log()
+                }
+            }).show()
         }
     }
 
