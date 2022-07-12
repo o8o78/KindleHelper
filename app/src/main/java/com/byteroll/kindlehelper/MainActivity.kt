@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun reloadArticles(){
         viewModel.articleList.clear()
-        viewModel.articleList.addAll(articleDao.loadAllArticles())
+        viewModel.articleList.addAll(articleDao.loadAllArticles().asReversed())
         if(viewModel.articleList.size<=0) return
         runOnUiThread {
             adapter.notifyDataSetChanged()
