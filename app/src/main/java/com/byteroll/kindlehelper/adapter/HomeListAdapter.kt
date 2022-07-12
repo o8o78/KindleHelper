@@ -4,8 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ThreadUtils
+import com.byteroll.kindlehelper.App
+import com.byteroll.kindlehelper.MainActivity
 import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.databinding.HomeListItemBinding
+import com.byteroll.kindlehelper.dialog.ArticleDialog
 import com.byteroll.kindlehelper.entity.Article
 
 class HomeListAdapter(private val context: Context, private val articleList: List<Article>) : RecyclerView.Adapter<HomeListAdapter.ViewHolder>() {
@@ -19,7 +23,13 @@ class HomeListAdapter(private val context: Context, private val articleList: Lis
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding = HomeListItemBinding.bind(LayoutInflater.from(context).inflate(R.layout.home_list_item, parent, false))
-        return ViewHolder(binding)
+        val holder = ViewHolder(binding)
+        holder.itemView.setOnClickListener{
+            val position = holder.adapterPosition
+            val article = articleList[position]
+            ArticleDialog(context, article.content).show()
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

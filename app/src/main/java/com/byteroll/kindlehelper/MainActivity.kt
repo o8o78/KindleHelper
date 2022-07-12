@@ -1,6 +1,7 @@
 package com.byteroll.kindlehelper
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,10 +30,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: HomeListAdapter
 
+    private var context: Context? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        context = this
         init()
         processShare()
     }
