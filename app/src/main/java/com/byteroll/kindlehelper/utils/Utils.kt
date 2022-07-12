@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import com.blankj.utilcode.util.ToastUtils
 import com.byteroll.kindlehelper.App
 
 class Utils {
@@ -58,5 +58,5 @@ fun String.log(){
 }
 
 fun String.toast(){
-    Toast.makeText(App.context, this, Toast.LENGTH_SHORT).show()
+    ToastUtils.showShort(this)
 }
