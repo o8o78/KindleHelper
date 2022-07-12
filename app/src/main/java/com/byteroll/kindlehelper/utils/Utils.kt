@@ -3,6 +3,7 @@ package com.byteroll.kindlehelper.utils
 import android.app.Activity
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
@@ -34,6 +35,18 @@ class Utils {
                 e.toString().log()
             }
             return ""
+        }
+        fun getActivityOfContext(context: Context): Activity?{
+            context.let {
+                var ctx = context
+                while (ctx is ContextWrapper){
+                    if (ctx is Activity){
+                        return ctx as Activity
+                    }
+                    ctx = (context as ContextWrapper).baseContext
+                }
+            }
+            return null
         }
     }
 }
