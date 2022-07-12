@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 }).show()
             }
+            R.id.clearAll ->{
+                clearArticles()
+            }
         }
         return true
     }
@@ -84,6 +87,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.articleList.add(Article("", content))
         }
         if(viewModel.articleList.size<=0) return
+        runOnUiThread {
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun clearArticles(){
+        viewModel.articleList.clear()
         runOnUiThread {
             adapter.notifyDataSetChanged()
         }
