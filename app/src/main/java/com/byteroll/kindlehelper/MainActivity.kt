@@ -3,25 +3,28 @@ package com.byteroll.kindlehelper
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.byteroll.kindlehelper.App.Companion.context
 import com.byteroll.kindlehelper.adapter.HomeListAdapter
+import com.byteroll.kindlehelper.dao.ArticleDao
+import com.byteroll.kindlehelper.database.ArticleDatabase
 import com.byteroll.kindlehelper.databinding.ActivityMainBinding
 import com.byteroll.kindlehelper.dialog.TypeInDialog
 import com.byteroll.kindlehelper.entity.Article
 import com.byteroll.kindlehelper.utils.Utils
 import com.byteroll.kindlehelper.utils.log
 import com.byteroll.kindlehelper.viewmodels.MainViewModel
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var articleDao: ArticleDao
 
     private lateinit var adapter: HomeListAdapter
 
@@ -42,7 +45,10 @@ class MainActivity : AppCompatActivity() {
             R.id.addManually -> {
                 TypeInDialog(this, object : TypeInDialog.Result{
                     override fun onResult(result: String) {
-                        reloadArticles(result)
+                        thread {
+                            articleDao.insertArticle(Article("", result))
+                            reloadArticles()
+                        }
                     }
                     override fun onError(error: String) {
                         "grab failed".log()
@@ -52,7 +58,10 @@ class MainActivity : AppCompatActivity() {
             R.id.fromClipBoard ->{
                 TypeInDialog(this, Utils.getFromClipBoard(), object : TypeInDialog.Result{
                     override fun onResult(result: String) {
-                        reloadArticles(result)
+                        thread {
+                            articleDao.insertArticle(Article("", result))
+                            reloadArticles()
+                        }
                     }
                     override fun onError(error: String) {
                         "grab failed with error: $error".log()
@@ -60,7 +69,9 @@ class MainActivity : AppCompatActivity() {
                 }).show()
             }
             R.id.clearAll ->{
-                clearArticles()
+                thread {
+                    clearArticles()
+                }
             }
         }
         return true
@@ -70,22 +81,21 @@ class MainActivity : AppCompatActivity() {
         Utils.setUiFlags(this)
         setSupportActionBar(binding.toolbar)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        articleDao = ArticleDatabase.getDatabase(this).articleDao()
 //        viewModel.initArticles()
-        adapter= HomeListAdapter(this, viewModel.articleList)
+        adapter = HomeListAdapter(this, viewModel.articleList)
         val layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
-    }
-
-    private fun reloadArticles(){
-        reloadArticles("")
+        thread {
+            reloadArticles()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun reloadArticles(content: String){
-        if(!TextUtils.isEmpty(content)){
-            viewModel.articleList.add(Article("", content))
-        }
+    private fun reloadArticles(){
+        viewModel.articleList.clear()
+        viewModel.articleList.addAll(articleDao.loadAllArticles())
         if(viewModel.articleList.size<=0) return
         runOnUiThread {
             adapter.notifyDataSetChanged()
@@ -94,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun clearArticles(){
+        articleDao.deleteArticle()
         viewModel.articleList.clear()
         runOnUiThread {
             adapter.notifyDataSetChanged()
