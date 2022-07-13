@@ -24,6 +24,12 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
 
     private var activity: Activity? = null
 
+    private val FLAG_EDIT = true
+
+    private val FLAG_DONE = !FLAG_EDIT
+
+    private var flag = true
+
     constructor(context: Context, article: String) : this(context) {
         this.article = article
     }
@@ -75,6 +81,7 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
             containerShow.text = article
             back.setOnClickListener(this@ArticleDialog)
             send.setOnClickListener(this@ArticleDialog)
+            fab.setOnClickListener(this@ArticleDialog)
         }
     }
 
@@ -89,6 +96,18 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
                         putExtra("article", article)
                     }
                     context.startActivity(intent)
+                }
+                fab ->{
+                    if (flag==FLAG_EDIT){
+                        edit.visibility = View.VISIBLE
+                        edit.setText(containerShow.text)
+                        fab.setImageResource(R.drawable.ic_done)
+                    } else if (flag==FLAG_DONE){
+                        edit.visibility = View.GONE
+                        containerShow.text = edit.text
+                        fab.setImageResource(R.drawable.ic_edit)
+                    }
+                    flag = !flag
                 }
             }
         }
