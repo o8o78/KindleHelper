@@ -16,6 +16,6 @@ interface ArticleDao {
     fun loadAllArticles(): List<Article>
 
     @Query("delete from Article")
-    fun deleteArticle()
+    fun clearArticles()
 
 }

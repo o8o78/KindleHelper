@@ -24,7 +24,7 @@ class HomeListAdapter(private val context: Context, private val articleList: Lis
         holder.itemView.setOnClickListener{
             val position = holder.adapterPosition
             val article = articleList[position]
-            ArticleDialog(context, article.content).show()
+            ArticleDialog(context, article).show()
         }
         return holder
     }

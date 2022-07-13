@@ -14,13 +14,15 @@ import android.view.WindowManager
 import com.byteroll.kindlehelper.R
 import com.byteroll.kindlehelper.activity.SendActivity
 import com.byteroll.kindlehelper.databinding.DlgArticleBinding
+import com.byteroll.kindlehelper.entity.Article
+import com.byteroll.kindlehelper.utils.ArticleDatabaseEditor
 import com.byteroll.kindlehelper.utils.Utils
 
 class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), View.OnClickListener {
 
     private lateinit var binding: DlgArticleBinding
 
-    private var article: String? = null
+    private lateinit var article: Article
 
     private var activity: Activity? = null
 
@@ -30,7 +32,7 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
 
     private var flag = true
 
-    constructor(context: Context, article: String) : this(context) {
+    constructor(context: Context, article: Article) : this(context) {
         this.article = article
     }
 
@@ -78,7 +80,7 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
 
     private fun initComponents() {
         binding.apply {
-            containerShow.text = article
+            containerShow.text = article.content
             back.setOnClickListener(this@ArticleDialog)
             send.setOnClickListener(this@ArticleDialog)
             fab.setOnClickListener(this@ArticleDialog)
@@ -93,7 +95,7 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
                 }
                 send -> {
                     val intent = Intent(context, SendActivity::class.java).apply {
-                        putExtra("article", article)
+                        putExtra("article", article.content)
                     }
                     context.startActivity(intent)
                 }
@@ -107,6 +109,8 @@ class ArticleDialog(context: Context) : Dialog(context, R.style.TransDialog), Vi
                         containerShow.text = edit.text
                         fab.setImageResource(R.drawable.ic_edit)
                     }
+                    article.content = containerShow.text.toString()
+                    ArticleDatabaseEditor.updateArticle(article)
                     flag = !flag
                 }
             }

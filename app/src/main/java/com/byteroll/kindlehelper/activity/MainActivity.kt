@@ -16,6 +16,7 @@ import com.byteroll.kindlehelper.database.ArticleDatabase
 import com.byteroll.kindlehelper.databinding.ActivityMainBinding
 import com.byteroll.kindlehelper.dialog.TypeInDialog
 import com.byteroll.kindlehelper.entity.Article
+import com.byteroll.kindlehelper.utils.ArticleDatabaseEditor
 import com.byteroll.kindlehelper.utils.Utils
 import com.byteroll.kindlehelper.utils.log
 import com.byteroll.kindlehelper.viewmodels.MainViewModel
@@ -26,8 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var articleDao: ArticleDao
 
     private lateinit var adapter: HomeListAdapter
 
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 TypeInDialog(this, object : TypeInDialog.Result{
                     override fun onResult(result: String) {
                         thread {
-                            articleDao.insertArticle(Article("", result))
+                            ArticleDatabaseEditor.insertArticle(Article("", result))
                             reloadArticles()
                         }
                     }
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 TypeInDialog(this, Utils.getFromClipBoard(), object : TypeInDialog.Result{
                     override fun onResult(result: String) {
                         thread {
-                            articleDao.insertArticle(Article("", result))
+                            ArticleDatabaseEditor.insertArticle(Article("", result))
                             reloadArticles()
                         }
                     }
@@ -88,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         Utils.setUiFlags(this)
         setSupportActionBar(binding.toolbar)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        articleDao = ArticleDatabase.getDatabase(this).articleDao()
         adapter = HomeListAdapter(this, viewModel.articleList)
         val layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.layoutManager = layoutManager
@@ -111,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             TypeInDialog(this, it, object : TypeInDialog.Result{
                 override fun onResult(result: String) {
                     thread {
-                        articleDao.insertArticle(Article("", result))
+                        ArticleDatabaseEditor.insertArticle(Article("", result))
                         reloadArticles()
                     }
                 }
@@ -125,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun reloadArticles(){
         viewModel.articleList.clear()
-        viewModel.articleList.addAll(articleDao.loadAllArticles().asReversed())
+        viewModel.articleList.addAll(ArticleDatabaseEditor.loadAllArticles().asReversed())
         if(viewModel.articleList.size<=0) return
         runOnUiThread {
             adapter.notifyDataSetChanged()
@@ -134,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun clearArticles(){
-        articleDao.deleteArticle()
+        ArticleDatabaseEditor.clearArticles()
         viewModel.articleList.clear()
         runOnUiThread {
             adapter.notifyDataSetChanged()
